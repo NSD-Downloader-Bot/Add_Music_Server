@@ -6,12 +6,13 @@ require('dotenv').config();
 const keep_alive = require('./keep_alive.js')
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = 5000;
 
 app.use(bodyParser.json());
 app.use(cors()); // Enable CORS for all routes
 
-mongoose.connect("mongodb+srv://tigersinghtiger9648:intelcorei5+mongodb@cluster0.fkh7qwf.mongodb.net/NSD_MUSIC?retryWrites=true&w=majority&appName=Cluster0", {
+mongoose.connect("mongodb+srv://tigersinghtiger9648:intelcorei5+mongodb@cluster0.fkh7qwf.mongodb.net/NSD_MUSIC?retryWrites=true&w=majority&tls=true
+", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });
@@ -36,6 +37,11 @@ const musicSchema = new mongoose.Schema({
 
 // Specify the collection name explicitly as "music"
 const music = mongoose.model('music', musicSchema, 'music');
+
+app.get('/', (req, res) => {
+    res.send('Server is running');
+});
+
 
 // API endpoint to fetch all music
 app.get('/api/music', async (req, res) => {
