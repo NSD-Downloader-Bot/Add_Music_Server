@@ -11,25 +11,6 @@ const PORT = 5000;
 app.use(bodyParser.json());
 app.use(cors()); // Enable CORS for all routes
 
-const https = require('https');
-
-https.get('https://api.ipify.org?format=json', (resp) => {
-    let data = '';
-
-    // A chunk of data has been received.
-    resp.on('data', (chunk) => {
-        data += chunk;
-    });
-
-    // The whole response has been received. Print out the result.
-    resp.on('end', () => {
-        console.log(JSON.parse(data).ip);
-    });
-
-}).on("error", (err) => {
-    console.log("Error: " + err.message);
-});
-
 
 mongoose.connect("mongodb+srv://tigersinghtiger9648:intelcorei5+mongodb@cluster0.fkh7qwf.mongodb.net/NSD_MUSIC?retryWrites=true&w=majority&tls=true
 ", {
