@@ -50,7 +50,8 @@ const musicSchema = new mongoose.Schema({
     "Sr": Number,
     "URL": String,
     "createdBy" : String,
-    "time" : String
+    "time" : String,
+    "video_id" : String
 }, {
     versionKey: false // Disable __v field
 });
@@ -75,10 +76,10 @@ app.get('/api/music', async (req, res) => {
 
 app.post(`/api/add/music`, async (req, res) => {
     try {
-        const { URL, createdBy } = req.body;
+        const { URL, createdBy, video_id } = req.body;
 
         // Check if the URL already exists in the collection
-        const existingItem = await music.findOne({ URL });
+        const existingItem = await music.findOne({ video_id });
 
         if (existingItem) {
             return res.status(400).send('URL already exists in the database.');
@@ -95,7 +96,8 @@ app.post(`/api/add/music`, async (req, res) => {
             "Sr": newSr,
             "URL": URL,
             "createdBy": createdBy, // add the createdBy from the request
-            "time": new Date().toISOString() // add the current time
+            "time": new Date().toISOString(),// add the current time
+            "video_id" : video_id
         });
 
         // Save the new document
